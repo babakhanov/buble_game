@@ -5,7 +5,7 @@ import ready from "./app/utils/ready";
 import app from "./app/app";
 
 ready(() => {
-  app(20);
+  app(20, 600, 1000); // number of customers, tickCount, tickTime
 });
 
 window.toggleSidebar = () => {
