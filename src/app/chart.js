@@ -1,5 +1,7 @@
 import Highcharts from "highcharts";
 import HighchartsMore from 'highcharts/highcharts-more';
+import showClient from "./show_client";
+
 HighchartsMore(Highcharts);
 
 var initChart = (data) => {
@@ -27,10 +29,10 @@ var initChart = (data) => {
       minorGridLineWidth: 0,
       minorGridLineColor: 'transparent',
       title: {
-        enabled: false,
+        text: 'Active At'
       },
       labels: {
-        enable: false,
+        format: '{value} tick'
       },
     },
 
@@ -39,7 +41,7 @@ var initChart = (data) => {
       startOnTick: false,
       endOnTick: false,
       title: {
-        text: ''
+        text: 'Interacted At'
       },
       labels: {
         format: '{value} tick'
@@ -53,16 +55,18 @@ var initChart = (data) => {
     tooltip: {
       useHTML: true,
       headerFormat: '<table>',
-      pointFormat: '<tr><td>{point.bugs}</td></tr>',
+      pointFormat: '<tr><td>{point.name}</td></tr>',
       footerFormat: '</table>',
       followPointer: true
     },
 
     plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true,
-          format: '{\'<span class="icon-bug" style="color: black;"></span>\'.repeat(point.name)}',
+      bubble: {
+        events: {
+          click: function (e) {
+            window.activeClient = e.point.options.id;
+            showClient();
+          }
         }
       }
     },
@@ -79,14 +83,15 @@ var chart = null;
 export default (data) => {
   var chartData = _.map(data, (i) => {
     return {
-      x: i.interactedAt,
+      y: i.interactedAt,
       z: i.health,
-      y: i.lastActive,
+      x: i.lastActive,
       name: i.name,
-      color: i.health >= 400 ? 'green' : (i.health >= 300 ? 'orange' : 'red'),
+      color: i.health >= 400 ? 'rgba(0, 128, 0, 0.5)' : (i.health >= 300 ? 'rgba(255, 165, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)'),
       bugs: i.bugs,
       questions: i.questions,
       requests: i.requests,
+      id: i.id,
     }
   });
   if (!chart){

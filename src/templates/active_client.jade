@@ -1,0 +1,36 @@
+if window.activeClient && window.clients[window.activeClient]
+  - client = window.clients[window.activeClient]
+  .gtr-hor.gtr-ver
+    .font-semi.text-md=client.name
+    table.table.table-striped
+      tr
+        td.text-right.
+          ID
+        td=client.id
+      tr
+        td.text-right.
+          Last Active
+        td=client.lastActive ? client.lastActive : 'n/a'
+      tr
+        td.text-right.
+          Interacted At
+        td=client.interactedAt ? client.interactedAt : 'n/a'
+      tr
+        td.text-right.
+          Helth
+        td
+          !{require("./health.jade")({client: client})}
+      tr
+        td.text-right.
+          Info
+        td
+          !{require("./info.jade")({client: client})}
+      tr
+        td.text-right.
+          Actions
+        td
+          !{require("./actions.jade")({client: client})}
+else
+  .tbl
+    .tbl-cell.text-center.align-middle.color-light.head-md
+      span.icon-palm

@@ -1,5 +1,6 @@
 import table from "./table";
 import chart from "./chart";
+import showClient from "./show_client";
 
 export default (customers, tickCount, tickTime) => {
   var time = 0;
@@ -7,6 +8,8 @@ export default (customers, tickCount, tickTime) => {
   var minHealth = 100;
   var maxHealth = 500;
   var currentTick = tickCount;
+  var delayId;
+  var toRemove = [];
 
   window.clients = _.object(_.map(_.range(0, customers), (index) => {
     return [index + 1, {
@@ -18,31 +21,37 @@ export default (customers, tickCount, tickTime) => {
       requests: 0, // each item takes -4 more health on each tick
       cancelation: false,
       interactedAt: 0,
-      lastActive: 0
+      lastActive: 0,
+      onMeeting: false,
     }]
   }));
 
   var randomKey = () => {
-    var keys = _.keys(window.clients);
-    console.log(keys.length);
-    return keys[_.random(0, keys.length - 1)];
+    var _keys = _.pluck(_.select(window.clients, (c) => { return c.onMeeting == false; }), "id");
+    return _keys[_.random(0, _keys.length - 1)];
   };
 
-  var render = (without) => {
+  var render = () => {
     var data, key;
-    if (without && without.length){
-      _.each(without, (id) => {
+    if (toRemove && toRemove.length){
+      _.each(toRemove, (id) => {
         delete(window.clients[id])
       });
+      toRemove = [];
     }
     if (!_.isEmpty(window.clients)){
       key = randomKey();
+      if (!clients[key]){
+        debugger
+      }
       window.clients[key].lastActive = tickCount - currentTick;
       window.clients[key][['requests', 'bugs', 'questions'][_.random(0, 2)]]++;
     }
     data = _.sortBy(_.values(window.clients), 'interactedAt');
+    document.getElementById("tick").innerHTML = `left: <b>${currentTick}</b>`;
     table(data);
     chart(data);
+    showClient();
   };
 
   var increaseHealth = (clientId, points) => {
@@ -68,6 +77,7 @@ export default (customers, tickCount, tickTime) => {
   window.action = (e) => {
     e.preventDefault();
     if (currentTick > 0){
+      clearTimeout(delayId);
       e.currentTarget.remove();
       var type = e.currentTarget.getAttribute('data-type');
       var clientId = e.currentTarget.getAttribute('data-client-id');
@@ -75,7 +85,27 @@ export default (customers, tickCount, tickTime) => {
         window.clients[clientId].interactedAt = tickCount - currentTick;
         solve[type](clientId);
       }
+      delayId = _.delay(tick, 0);
     }
+  };
+
+  var performTick = () => {
+    _.each(window.clients, (client, index) => {
+      client.health--;
+      if (client.bugs){
+        client.health -= 5;
+      }
+      if (client.requests){
+        client.health -= 3;
+      }
+      if (client.questions){
+        client.health -= 1;
+      }
+      client.points = client.bugs * 5 + client.requests * 3 + client.questions;
+      if (client.health < 100){
+        toRemove.push(index);
+      }
+    });
   };
 
   var tick = (time) => {
@@ -83,37 +113,21 @@ export default (customers, tickCount, tickTime) => {
       currentTick = 0;
       alert('game over');
     }else{
-      var toRemove = [];
       point = new Date() * 1;
-      document.getElementById("tick").innerHTML = currentTick;
+
       time = tickTime - ((new Date() * 1) - point);
       if (time < 0){
         time = 0;
       }
       currentTick --;
       if (currentTick >= 0){
-        _.delay(tick, time);
+        delayId = _.delay(tick, time);
       }
-      _.each(window.clients, (client, index) => {
-        client.health--;
-        if (client.bugs){
-          client.health -= 5;
-        }
-        if (client.requests){
-          client.health -= 3;
-        }
-        if (client.questions){
-          client.health -= 1;
-        }
-        client.points = client.bugs * 5 + client.requests * 3 + client.questions;
-        if (client.health < 100){
-          toRemove.push(index);
-        }
-      });
     }
-    render(toRemove);
+    render();
   };
-  _.delay(tick, time);
+
+  delayId = _.delay(tick, time);
 
 };
 

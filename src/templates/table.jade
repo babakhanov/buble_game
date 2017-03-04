@@ -17,19 +17,6 @@ div.gtr-hor.gtr-ver
             td=client.interactedAt ? client.interactedAt : ''
             td=client.lastActive ? client.lastActive : ''
             td
-              if client.health >= 400
-                .color-green=client.health
-              else if client.health >= 300
-                .color-orange=client.health
-              else
-                .color-red=client.health
+              !{require("./health.jade")({client: client})}
             td
-              each i in _.range(client.bugs)
-                a.smile.gtr-r-xs.color-red(href data-client-id=client.id data-type='bug' onclick="window.action(event)")
-                  span.icon-bug
-              each i in _.range(client.questions)
-                a.smile.gtr-r-xs.color-orange(href data-client-id=client.id data-type='question' onclick="window.action(event)")
-                  span.icon-question
-              each i in _.range(client.requests)
-                a.smile.gtr-r-xs.color-green(href data-client-id=client.id data-type='request' onclick="window.action(event)")
-                  span.icon-request
+              !{require("./info.jade")({client: client})}
