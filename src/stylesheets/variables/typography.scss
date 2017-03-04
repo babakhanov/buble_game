@@ -1,0 +1,24 @@
+$font-path: '../fonts';
+$font-size-base: 14px;
+
+$font-family-sans-serif: "Ubuntu", sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+$fw-light: 300;
+$fw-norm: 400;
+$fw-bold: 700;
+
+$font-weights: (
+  (norm, $fw-norm),
+  (semi, $fw-norm),
+  (bold, $fw-bold),
+);
+
+
+$link-hover-decoration: none;
+
+$typo-presets: (text, head, title);
+$typo-start: 0.6em;
+$typo-steps: (xs, sm, norm, md, lg);
+$product-card-font-size: 1.3rem;
+

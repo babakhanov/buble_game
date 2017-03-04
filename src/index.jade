@@ -1,10 +1,33 @@
 doctype html
 html
   head
-    script(src='/main.js')
-    link(rel='stylesheet' href='/application.css')
+    link(rel='stylesheet' href='application.css')
+    script(src='main.js')
     title.
       Buble Metrics
   body
-    div.
-      bidy
+    .main
+      .header
+        .tbl
+          .tbl-cell.align-middle.cell-5.gtr-hor
+            .smile.cursor-pointer.text-lg(onclick="toggleSidebar()")
+              .smile.align-middle.sidebar-open-icon
+                span.icon-angle-left.line-null
+              .smile.align-middle
+                span.icon-menu.line-null
+              .smile.align-middle.sidebar-close-icon
+                span.icon-angle-right.line-null
+          .tbl-cell.cell-2.text-center
+            .smile.head-xs.row-b
+              a(href='/')
+                span.icon-palm.line-null
+          .tbl-cell.align-middle.text-right.cell-5.gtr-hor
+      .tbl
+        .sidebar
+          .gtr-hor.gtr-ver.font-light
+            a.sidebar-link.active(href='#') Buble Chart
+        .tbl-cell
+          .content
+            .gtr-hor.gtr-ver
+              .box-tickets.bg-white
+                #container

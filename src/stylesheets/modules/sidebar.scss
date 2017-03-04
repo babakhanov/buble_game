@@ -1,0 +1,45 @@
+.sidebar {
+  @include scope((
+    "tbl-cell",
+    "bg-dark",
+    "align-top",
+    "color-white",
+  ));
+  width: $sidebar-width;
+  text-shadow: 0 0 1px rgba(black, 0.5);
+  position: relative;
+  z-index: 4;
+  &-close-icon {
+    display: none;
+  }
+  &-link, &-link:focus {
+    display: block;
+    padding: 10px $gutter / 2;
+    margin: 0 -#{$gutter / 2};
+    color: rgba(white, 0.95);
+    font-weight: $fw-light;
+    border-bottom: 1px solid rgb(74, 88, 103);
+    &:first-child {
+      border-top: 1px solid rgb(74, 88, 103);
+    }
+    &:hover, &.active {
+      color: white;
+      background-color: rgba(white, 0.03);
+    }
+  }
+  &-close {
+    .sidebar-open-icon {
+      display: none;
+    }
+    .sidebar-close-icon {
+      display: inline-block;
+    }
+    .sidebar {
+      display: none;
+    }
+    .header {
+      padding-left: 0;
+    }
+  }
+}
+

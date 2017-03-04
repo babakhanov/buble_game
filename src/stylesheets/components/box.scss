@@ -1,0 +1,17 @@
+$boxes: (
+  ("xs", 12rem),
+  ("md", 30rem)
+);
+
+.box {
+  @each $box in $boxes {
+    &-#{nth($box, 1)}{
+      width: nth($box, 2); 
+    }
+  }
+}
+.box-ticket {
+  border-radius: $btn-border-radius-base;
+  overflow: hidden;
+}
+

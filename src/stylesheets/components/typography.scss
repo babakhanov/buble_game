@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,700&subset=latin,cyrillic-ext);
+
+@each $preset in $typo-presets {
+  .#{$preset} {
+    @each $step in $typo-steps {
+      $typo-start: $typo-start + 0.15;
+      &-#{$step}{
+        font-size: $typo-start;
+      }
+    }
+  }
+  $typo-start: $typo-start + 0.75;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+.line {
+  &-norm {
+    line-height: normal;
+  }
+  &-null {
+    line-height: 0;
+  }
+}
+
+.font {
+  @each $font-weight in $font-weights {
+    &-#{nth($font-weight, 1)}{
+      font-weight: nth($font-weight, 2);
+    }
+  }
+}
+
+.color {
+  @each $color in $text-colors {
+    &-#{nth($color, 1)}{
+      color: nth($color, 2);
+    }
+  }
+}
+
+.align {
+  @each $align in (middle, top, bottom, baseline){
+    &-#{$align}{
+      vertical-align: $align;
+    }
+  }
+}
+.nospace {
+  margin: 0;
+  padding: 0;
+}
+.page-title {
+  margin: 0 -15px;
+  background: white;
+  padding: 10px 15px;
+  font-weight: 100;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  color: #222;
+}
+

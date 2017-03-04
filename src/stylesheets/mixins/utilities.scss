@@ -1,0 +1,14 @@
+@mixin scope($classes){
+  @each $class in $classes {
+    @extend .#{$class};
+  }
+}
+
+@mixin extend-simple-align {
+  @each $i in (top, bottom, middle){
+    &.#{$i} {
+      @extend .align-#{$i};
+    }
+  }
+}
+
