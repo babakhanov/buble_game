@@ -7,27 +7,17 @@ html
       Buble Metrics
   body
     .main
-      .header
-        .tbl
-          .tbl-cell.align-middle.cell-5.gtr-hor
-            .smile.cursor-pointer.text-lg(onclick="toggleSidebar()")
-              .smile.align-middle.sidebar-open-icon
-                span.icon-angle-left.line-null
-              .smile.align-middle
-                span.icon-menu.line-null
-              .smile.align-middle.sidebar-close-icon
-                span.icon-angle-right.line-null
-          .tbl-cell.cell-2.text-center
-            .smile.head-xs.row-b
-              a(href='/')
-                span.icon-palm.line-null
-          .tbl-cell.align-middle.text-right.cell-5.gtr-hor
+      .header.text-center
+        .gtr-hor-2x
+          .tbl
+            .tbl-cell.cell-5
+            .tbl-cell.cell-2.text-center.align-middle
+              .smile.head-xs.row-b
+                a(href='/')
+                  span.icon-palm.line-null
+            .tbl-cell.cell-5.text-right.align-middle.text-lg
+              #tick 600
       .tbl
-        .sidebar
-          .gtr-hor.gtr-ver.font-light
-            a.sidebar-link.active(href='#') Buble Chart
         .tbl-cell
           .content
-            .gtr-hor.gtr-ver
-              .box-tickets.bg-white
-                #container
+            #container

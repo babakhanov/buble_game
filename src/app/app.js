@@ -1,120 +1,56 @@
-import Highcharts from "highcharts";
-import HighchartsMore from 'highcharts/highcharts-more';
-HighchartsMore(Highcharts);
+import sleep from "./utils/sleep";
 
-export default () => {
-  Highcharts.chart('container', {
+export default (customers) => {
+  var tableTpl = require("../templates/table.jade");
+  var time = 0;
+  var point = 0;
+  var tickCount = 10;
+  // each 10 ticks manager gets +1 bonus for each yellow and +2 for each green customers and -1 for each red
+  // game takes 600 ticks and could be over if all customers were canceled
 
-    chart: {
-      type: 'bubble',
-      plotBorderWidth: 1,
-      zoomType: 'xy'
-    },
-
-    legend: {
-      enabled: false
-    },
-
-    title: {
-      text: 'Sugar and fat intake per country'
-    },
-
-    subtitle: {
-      text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
-    },
-
-    xAxis: {
-      gridLineWidth: 1,
-      title: {
-        text: 'Daily fat intake'
-      },
-      labels: {
-        format: '{value} gr'
-      },
-      plotLines: [{
-        color: 'black',
-        dashStyle: 'dot',
-        width: 2,
-        value: 65,
-        label: {
-          rotation: 0,
-          y: 15,
-          style: {
-            fontStyle: 'italic'
-          },
-          text: 'Safe fat intake 65g/day'
-        },
-        zIndex: 3
-      }]
-    },
-
-    yAxis: {
-      startOnTick: false,
-      endOnTick: false,
-      title: {
-        text: 'Daily sugar intake'
-      },
-      labels: {
-        format: '{value} gr'
-      },
-      maxPadding: 0.2,
-      plotLines: [{
-        color: 'black',
-        dashStyle: 'dot',
-        width: 2,
-        value: 50,
-        label: {
-          align: 'right',
-          style: {
-            fontStyle: 'italic'
-          },
-          text: 'Safe sugar intake 50g/day',
-          x: -10
-        },
-        zIndex: 3
-      }]
-    },
-
-    tooltip: {
-      useHTML: true,
-      headerFormat: '<table>',
-      pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-        '<tr><th>Fat intake:</th><td>{point.x}g</td></tr>' +
-        '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
-        '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>',
-      footerFormat: '</table>',
-      followPointer: true
-    },
-
-    plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true,
-          format: '{point.name}'
-        }
-      }
-    },
-
-    series: [{
-      data: [
-        { x: 95, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
-        { x: 86.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
-        { x: 80.8, y: 91.5, z: 15.8, name: 'FI', country: 'Finland' },
-        { x: 80.4, y: 102.5, z: 12, name: 'NL', country: 'Netherlands' },
-        { x: 80.3, y: 86.1, z: 11.8, name: 'SE', country: 'Sweden' },
-        { x: 78.4, y: 70.1, z: 16.6, name: 'ES', country: 'Spain' },
-        { x: 74.2, y: 68.5, z: 14.5, name: 'FR', country: 'France' },
-        { x: 73.5, y: 83.1, z: 10, name: 'NO', country: 'Norway' },
-        { x: 71, y: 93.2, z: 24.7, name: 'UK', country: 'United Kingdom' },
-        { x: 69.2, y: 57.6, z: 10.4, name: 'IT', country: 'Italy' },
-        { x: 68.6, y: 20, z: 16, name: 'RU', country: 'Russia' },
-        { x: 65.5, y: 126.4, z: 35.3, name: 'US', country: 'United States' },
-        { x: 65.4, y: 50.8, z: 28.5, name: 'HU', country: 'Hungary' },
-        { x: 63.4, y: 51.8, z: 15.4, name: 'PT', country: 'Portugal' },
-        { x: 64, y: 82.9, z: 31.3, name: 'NZ', country: 'New Zealand' }
-      ]
-    }]
-
+  var clients = _.map(_.range(0, customers), (index) => {
+    return {
+      id: index + 1,
+      name: `Client ${index + 1}`,
+      health: _.random(100, 500),
+      questions: 0, // each item takes -3 more health on each tick
+      bugs: 0, // each item takes -5 more health on each tick
+      featureRequests: 0, // each item takes -4 more health on each tick
+      cancelation: false,
+    }
   });
+
+  var tick = (time) => {
+    point = new Date() * 1;
+    document.getElementById("tick").innerHTML = tickCount;
+    time = 1000 - ((new Date() * 1) - point);
+    if (time < 0){
+      time = 0;
+    }
+    tickCount --;
+    if (tickCount >= 0){
+      _.delay(tick, time, 'logged later');
+    }
+    _.each(clients, (client) => {
+      client.health --;
+      if (client.bugs){
+        client.health -= 3;
+      }
+    });
+    _.times(1, () => {
+      clients[_.random(clients.length - 1)].featureRequests++;
+    })
+    _.times(2, () => {
+      clients[_.random(clients.length - 1)].bugs++;
+    })
+    _.times(3, () => {
+      clients[_.random(clients.length - 1)].questions++;
+    })
+
+    document.getElementById("container").innerHTML = tableTpl({clients: clients});
+  };
+
+  _.delay(tick, time, 'logged later');
+
 };
 

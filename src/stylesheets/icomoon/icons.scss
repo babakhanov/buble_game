@@ -1,51 +1,6 @@
-.#{$icomoon-prefix}-l-angle-up { 
+.#{$icomoon-prefix}-question { 
   &:before {
-    content: $icon-l-angle-up;
-  }
-}
-.#{$icomoon-prefix}-l-angle-right { 
-  &:before {
-    content: $icon-l-angle-right;
-  }
-}
-.#{$icomoon-prefix}-l-angle-left { 
-  &:before {
-    content: $icon-l-angle-left;
-  }
-}
-.#{$icomoon-prefix}-l-angle-down { 
-  &:before {
-    content: $icon-l-angle-down;
-  }
-}
-.#{$icomoon-prefix}-palm { 
-  &:before {
-    content: $icon-palm;
-  }
-}
-.#{$icomoon-prefix}-search { 
-  &:before {
-    content: $icon-search;
-  }
-}
-.#{$icomoon-prefix}-menu { 
-  &:before {
-    content: $icon-menu;
-  }
-}
-.#{$icomoon-prefix}-user { 
-  &:before {
-    content: $icon-user;
-  }
-}
-.#{$icomoon-prefix}-close { 
-  &:before {
-    content: $icon-close;
-  }
-}
-.#{$icomoon-prefix}-check { 
-  &:before {
-    content: $icon-check;
+    content: $icon-question;
   }
 }
 .#{$icomoon-prefix}-angle-down { 
@@ -81,6 +36,66 @@
 .#{$icomoon-prefix}-paper-plane { 
   &:before {
     content: $icon-paper-plane;
+  }
+}
+.#{$icomoon-prefix}-request { 
+  &:before {
+    content: $icon-request;
+  }
+}
+.#{$icomoon-prefix}-bug { 
+  &:before {
+    content: $icon-bug;
+  }
+}
+.#{$icomoon-prefix}-l-angle-left { 
+  &:before {
+    content: $icon-l-angle-left;
+  }
+}
+.#{$icomoon-prefix}-l-angle-down { 
+  &:before {
+    content: $icon-l-angle-down;
+  }
+}
+.#{$icomoon-prefix}-palm { 
+  &:before {
+    content: $icon-palm;
+  }
+}
+.#{$icomoon-prefix}-l-angle-up { 
+  &:before {
+    content: $icon-l-angle-up;
+  }
+}
+.#{$icomoon-prefix}-l-angle-right { 
+  &:before {
+    content: $icon-l-angle-right;
+  }
+}
+.#{$icomoon-prefix}-search { 
+  &:before {
+    content: $icon-search;
+  }
+}
+.#{$icomoon-prefix}-menu { 
+  &:before {
+    content: $icon-menu;
+  }
+}
+.#{$icomoon-prefix}-user { 
+  &:before {
+    content: $icon-user;
+  }
+}
+.#{$icomoon-prefix}-close { 
+  &:before {
+    content: $icon-close;
+  }
+}
+.#{$icomoon-prefix}-check { 
+  &:before {
+    content: $icon-check;
   }
 }
 

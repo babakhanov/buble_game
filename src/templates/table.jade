@@ -1,0 +1,34 @@
+.gtr-hor
+  .gtr-ver
+    .text-lg.font-semi
+      .text-md Customers (table view)
+  .text-line
+    .box-tickets.bg-white
+      div.gtr-hor.gtr-ver
+        .clearfix
+          table.table.table-striped
+            thead
+              tr
+                td ID
+                td Name
+                td Health
+                td Info
+            tbody
+              each client in clients
+                tr
+                  td=client.id
+                  td=client.name
+                  td
+                    if client.health >= 400
+                      .color-green=client.health
+                    else if client.health >= 300
+                      .color-orange=client.health
+                    else
+                      .color-red=client.health
+                  td
+                    .smile.gtr-r-xs
+                      =client.bugs
+                    .smile.gtr-r-xs
+                      =client.questions
+                    .smile.gtr-r-xs
+                      =client.featureRequests

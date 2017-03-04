@@ -5,11 +5,14 @@ import ready from "./app/utils/ready";
 import app from "./app/app";
 
 ready(() => {
-  app();
+  app(20);
 });
 
 window.toggleSidebar = () => {
   document.getElementsByTagName("body")[0].classList.toggle("sidebar-close");
-  app();
+  //app();
 };
 
+if (NODE_ENV == 'development'){
+  window._ = _;
+}

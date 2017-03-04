@@ -23,6 +23,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel-loader',
+      exclude: /node_modules/,
       query: {
         presets: ['es2015'],
       }
@@ -43,13 +44,19 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin("application.css"),
+    new webpack.ProvidePlugin({
+      "_": "underscore"
+    }),
+    new webpack.DefinePlugin({
+      NODE_ENV: JSON.stringify(NODE_ENV),
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.jade',
       inject: false,
     })
   ],
 
-  devtool: NODE_ENV == 'development' ? "cheap-inline-source-map" : false,
+  devtool: NODE_ENV == 'development' ? "cheap-inline-module-source-map" : false,
 }
 
 if (NODE_ENV == 'production'){
