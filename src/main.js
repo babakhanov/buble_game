@@ -3,9 +3,15 @@ require("./app/app.js");
 
 import ready from "./app/utils/ready";
 import app from "./app/app";
+import gameTpl from "./templates/game.jade";
+
+window.play = (customersCount, tickCount, tickTime) => {
+  document.getElementById("content").innerHTML = gameTpl();
+  app(customersCount, tickCount, tickTime);
+};
 
 ready(() => {
-  app(20, 600, 5000); // number of customers, tickCount, tickTime
+  play(20, 600, 5000);
 });
 
 window.toggleSidebar = () => {

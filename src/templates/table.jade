@@ -8,7 +8,7 @@ div.gtr-hor.gtr-ver
           td Interacted At (tick)
           td Last Active (tick)
           td Health
-          td(style='width: 300px;') Info
+          td.text-right(style='width: 300px;') Actions
       tbody
         each client in data
           tr
@@ -18,5 +18,6 @@ div.gtr-hor.gtr-ver
             td=client.lastActive ? client.lastActive : ''
             td
               !{require("./health.jade")({client: client})}
-            td
+            td.text-right.align-middle
               !{require("./info.jade")({client: client})}
+              !{require("./actions.jade")({client: client})}

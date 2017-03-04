@@ -4,32 +4,31 @@ if window.activeClient && window.clients[window.activeClient]
     .font-semi.text-md=client.name
     table.table.table-striped
       tr
-        td.text-right.
+        td.text-right.cell-4.
           ID
         td=client.id
       tr
-        td.text-right.
+        td.text-right.cell-4.
           Last Active
         td=client.lastActive ? client.lastActive : 'n/a'
       tr
-        td.text-right.
+        td.text-right.cell-4.
           Interacted At
         td=client.interactedAt ? client.interactedAt : 'n/a'
       tr
-        td.text-right.
+        td.text-right.cell-4.
           Helth
         td
           !{require("./health.jade")({client: client})}
       tr
-        td.text-right.
-          Info
-        td
-          !{require("./info.jade")({client: client})}
-      tr
-        td.text-right.
+        td.text-right.cell-4.
           Actions
         td
-          !{require("./actions.jade")({client: client})}
+          .row-t-sm
+            .gtr-t-sm
+              !{require("./actions.jade")({client: client})}
+            .gtr-t-sm
+              !{require("./info.jade")({client: client})}
 else
   .tbl
     .tbl-cell.text-center.align-middle.color-light.head-md

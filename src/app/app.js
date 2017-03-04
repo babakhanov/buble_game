@@ -41,9 +41,6 @@ export default (customers, tickCount, tickTime) => {
     }
     if (!_.isEmpty(window.clients)){
       key = randomKey();
-      if (!clients[key]){
-        debugger
-      }
       window.clients[key].lastActive = tickCount - currentTick;
       window.clients[key][['requests', 'bugs', 'questions'][_.random(0, 2)]]++;
     }
@@ -57,37 +54,8 @@ export default (customers, tickCount, tickTime) => {
   var increaseHealth = (clientId, points) => {
     var _healts = window.clients[clientId].health + points;
     window.clients[clientId].health = _healts < maxHealth ? _healts : maxHealth;
+    delayId = _.delay(tick, 0);
   }
-
-  var solve = {
-    bug: (clientId) => {
-      window.clients[clientId].bugs--;
-      increaseHealth(clientId, 20);
-    },
-    question: (clientId) => {
-      window.clients[clientId].questions--;
-      increaseHealth(clientId, 10);
-    },
-    request: (clientId) => {
-      window.clients[clientId].requests--;
-      increaseHealth(clientId, 50);
-    },
-  };
-
-  window.action = (e) => {
-    e.preventDefault();
-    if (currentTick > 0){
-      clearTimeout(delayId);
-      e.currentTarget.remove();
-      var type = e.currentTarget.getAttribute('data-type');
-      var clientId = e.currentTarget.getAttribute('data-client-id');
-      if (window.clients[clientId]){
-        window.clients[clientId].interactedAt = tickCount - currentTick;
-        solve[type](clientId);
-      }
-      delayId = _.delay(tick, 0);
-    }
-  };
 
   var performTick = () => {
     _.each(window.clients, (client, index) => {
@@ -108,6 +76,43 @@ export default (customers, tickCount, tickTime) => {
     });
   };
 
+  var solve = {
+    bug: (clientId) => {
+      window.clients[clientId].bugs--;
+      increaseHealth(clientId, 20);
+    },
+    question: (clientId) => {
+      window.clients[clientId].questions--;
+      increaseHealth(clientId, 10);
+    },
+    request: (clientId) => {
+      window.clients[clientId].requests--;
+      increaseHealth(clientId, 60);
+    },
+    meeting: (clientId) => {
+      window.clients[clientId].onMeeting = true;
+      _.times(3, () => {
+        performTick()
+      });
+      window.clients[clientId].onMeeting = false;
+      increaseHealth(clientId, 100);
+    }
+  };
+
+  window.action = (e) => {
+    e.preventDefault();
+    if (currentTick > 0){
+      clearTimeout(delayId);
+      e.currentTarget.remove();
+      var type = e.currentTarget.getAttribute('data-type');
+      var clientId = e.currentTarget.getAttribute('data-client-id');
+      if (window.clients[clientId]){
+        window.clients[clientId].interactedAt = tickCount - currentTick;
+        solve[type](clientId);
+      }
+    }
+  };
+
   var tick = (time) => {
     if (_.isEmpty(window.clients)){
       currentTick = 0;
@@ -119,8 +124,8 @@ export default (customers, tickCount, tickTime) => {
       if (time < 0){
         time = 0;
       }
-      currentTick --;
-      if (currentTick >= 0){
+      if (currentTick > 0){
+        currentTick --;
         delayId = _.delay(tick, time);
       }
     }
