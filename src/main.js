@@ -1,23 +1,23 @@
 require("./stylesheets/application.scss");
-require("./app/app.js");
 
 import ready from "./app/utils/ready";
-import app from "./app/app";
+import game from "./app/game";
 import gameTpl from "./templates/game.jade";
+import introTpl from "./templates/intro.jade";
 
-window.play = (customersCount, tickCount, tickTime) => {
+window.play = () => {
+  let customersCount = parseInt(document.getElementById("customersCount").value) || 20;
+  let tickCount = parseInt(document.getElementById("tickCount").value) || 20;
+  let tickTime = parseInt(document.getElementById("tickTime").value) || 20;
   document.getElementById("content").innerHTML = gameTpl();
-  app(customersCount, tickCount, tickTime);
+  game(customersCount, tickCount, tickTime);
 };
 
-ready(() => {
-  play(20, 600, 5000);
-});
-
-window.toggleSidebar = () => {
-  document.getElementsByTagName("body")[0].classList.toggle("sidebar-close");
-  //app();
+window.init = () => {
+  document.getElementById("content").innerHTML = introTpl();
 };
+
+ready(window.init);
 
 if (NODE_ENV == 'development'){
   window._ = _;

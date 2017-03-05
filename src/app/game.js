@@ -16,9 +16,9 @@ export default (customers, tickCount, tickTime) => {
       id: index + 1,
       name: `Client ${index + 1}`,
       health: _.random(minHealth, maxHealth),
-      questions: 0, // each item takes -3 more health on each tick
+      questions: 0, // each item takes -1 more health on each tick
       bugs: 0, // each item takes -5 more health on each tick
-      requests: 0, // each item takes -4 more health on each tick
+      requests: 0, // each item takes -3 more health on each tick
       cancelation: false,
       interactedAt: 0,
       lastActive: 0,
@@ -29,6 +29,18 @@ export default (customers, tickCount, tickTime) => {
   var randomKey = () => {
     var _keys = _.pluck(_.select(window.clients, (c) => { return c.onMeeting == false; }), "id");
     return _keys[_.random(0, _keys.length - 1)];
+  };
+
+  var checkStatus = () => {
+    var msg;
+    if (_.isEmpty(window.clients)){
+      msg = 'game over';
+    }else{
+      msg = 'you won';
+    }
+    if(confirm(msg)){
+      window.location.reload();
+    }
   };
 
   var render = () => {
@@ -46,6 +58,9 @@ export default (customers, tickCount, tickTime) => {
     }
     data = _.sortBy(_.values(window.clients), 'interactedAt');
     document.getElementById("tick").innerHTML = `left: <b>${currentTick}</b>`;
+    if (currentTick <= 0){
+      checkStatus();
+    }
     table(data);
     chart(data);
     showClient();
@@ -58,22 +73,24 @@ export default (customers, tickCount, tickTime) => {
   }
 
   var performTick = () => {
-    _.each(window.clients, (client, index) => {
-      client.health--;
-      if (client.bugs){
-        client.health -= 5;
-      }
-      if (client.requests){
-        client.health -= 3;
-      }
-      if (client.questions){
-        client.health -= 1;
-      }
-      client.points = client.bugs * 5 + client.requests * 3 + client.questions;
-      if (client.health < 100){
-        toRemove.push(index);
-      }
-    });
+    if (currentTick > 0){
+      _.each(window.clients, (client, index) => {
+        client.health--;
+        if (client.bugs){
+          client.health -= 5;
+        }
+        if (client.requests){
+          client.health -= 3;
+        }
+        if (client.questions){
+          client.health -= 1;
+        }
+        client.points = client.bugs * 5 + client.requests * 3 + client.questions;
+        if (client.health < 100){
+          toRemove.push(index);
+        }
+      });
+    }
   };
 
   var solve = {
@@ -87,6 +104,7 @@ export default (customers, tickCount, tickTime) => {
     },
     request: (clientId) => {
       window.clients[clientId].requests--;
+      window.clients[randomKey()].bugs++;
       increaseHealth(clientId, 60);
     },
     meeting: (clientId) => {
@@ -114,10 +132,7 @@ export default (customers, tickCount, tickTime) => {
   };
 
   var tick = (time) => {
-    if (_.isEmpty(window.clients)){
-      currentTick = 0;
-      alert('game over');
-    }else{
+    if (!_.isEmpty(window.clients)){
       point = new Date() * 1;
 
       time = tickTime - ((new Date() * 1) - point);

@@ -1,0 +1,68 @@
+.content
+  .gtr-hor.gtr-ver
+    .box-tickets.bg-white
+      .gtr-hor.gtr-ver
+        .text-line
+          .text-lg.font-semi
+            .text-md Welcome to CRM buble game
+        .text-line.
+          Feel yourself a sales ninja
+        .text-line
+          .text-lg Rules
+        .text-line
+          ul
+            li Player has the N number of customers
+            li Each customer has a healts. Healts it's how customer happy with your product (from 1 to 5).
+            li When client's health <= 1, client cancels subscription
+            li
+              span Once coutdown (tick) is begun
+              ul
+                li Each tick takes off 0.01 point of health for each customer
+                li.
+                  Each tick one customer gets a but or want a new feature or have a question
+                li
+                  span Each tick takes off 0.05 more of healt for curstomers which got an unfixed bug
+                  button.btn.btn-link.btn-xs.color-red
+                    span.icon-bug
+                li
+                  span Each tick takes off 0.03 more of health for curstomers which requested for new feature and haven't had it
+                  button.btn.btn-link.btn-xs.color-green
+                    span.icon-request
+                li
+                  span Each tick takes off 0.01 more of health for curstomers which got an unresolved question
+                  button.btn.btn-link.btn-xs.color-orange
+                    span.icon-question
+
+            li Avaiable actions
+              li
+                button.btn.btn-link.btn-xs.color-orange
+                  span.icon-question
+                span Solve a question (+0.1 for customer health)
+              li
+                button.btn.btn-link.btn-xs.color-red
+                  span.icon-bug
+                span Fix a bug (+0.2 for customer health)
+              li
+                button.btn.btn-link.btn-xs.color-green
+                  span.icon-request
+                span Develop a feture (+0.6 for customer health) but one random customer gets a bug
+              li
+                button.btn.btn-default.btn-xs Meeting
+                span  Meeting with customer (+1 for customer health)
+                i But each meeting with customer takes 3 ticks. What each tick does look "Once coutdown (tick) is begun"
+            li Game could be over when no clients left
+            li Player wins when coundown is over and he still has active customers
+        .text-line
+          .text-line.row
+            .tbl
+              .tbl-cell.cell-4.gtr-hor.align-middle
+                .clearfix Customers Count
+                input#customersCount.cell-12(type='number' step='1' value='20')
+              .tbl-cell.cell-4.gtr-hor.align-middle
+                .clearfix Ticks Count
+                input#tickCount.cell-12(type='number' step='1' value='600')
+              .tbl-cell.cell-4.gtr-hor.align-middle
+                .clearfix Tick Time (miliseconds)
+                input#tickTime.cell-12(type='number' step='1' value='5000')
+              .tbl-cell.cell-4.gtr-hor.align-middle
+                button.btn.btn-lg.btn-success(onclick="window.play()") Play
