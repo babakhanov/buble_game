@@ -13,7 +13,7 @@ module.exports = {
 
   output: {
     path: __dirname + '/docs/',
-    publicPath: NODE_ENV == 'production' ? 'https://babakhanov.github.io/buble_metrics/' : '/',
+    publicPath: NODE_ENV == 'production' ? 'https://babakhanov.github.io/buble_game/' : '/',
     filename: '[name].js'
   },
 
