@@ -38,7 +38,7 @@ module.exports = {
       loader: 'jade-loader'
     },{
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
-      loader: 'file-loader?name=[name]-[hash].[ext]'
+      loader: 'file-loader?name=[name].[ext]'
     }]
   },
 

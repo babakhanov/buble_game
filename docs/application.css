@@ -1,8 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,700&subset=latin,cyrillic-ext);@charset "UTF-8";
 @font-face {
   font-family: "Icomoon";
-  src: url(https://babakhanov.github.io/buble_metrics/icomoon-4f32192e86a42f0d239bdf7ac1713195.eot);
-  src: url(https://babakhanov.github.io/buble_metrics/icomoon-f264afbff366ac90c01344e17c130a49.svg#Icomoon) format("svg"), url(https://babakhanov.github.io/buble_metrics/icomoon-4f32192e86a42f0d239bdf7ac1713195.eot?#iefix) format("embedded-opentype"), url(https://babakhanov.github.io/buble_metrics/icomoon-dd314ccaba6d02befafb3b182f5bb4cb.woff) format("woff"), url(https://babakhanov.github.io/buble_metrics/icomoon-381a9c3d5453c97872e475912aa0583a.ttf) format("truetype");
+  src: url(https://babakhanov.github.io/buble_metrics/icomoon.eot);
+  src: url(https://babakhanov.github.io/buble_metrics/icomoon.svg#Icomoon) format("svg"), url(https://babakhanov.github.io/buble_metrics/icomoon.eot?#iefix) format("embedded-opentype"), url(https://babakhanov.github.io/buble_metrics/icomoon.woff) format("woff"), url(https://babakhanov.github.io/buble_metrics/icomoon.ttf) format("truetype");
   font-weight: normal;
   font-style: normal; }
 
