@@ -134,7 +134,6 @@ export default (customers, tickCount, tickTime) => {
   var tick = (time) => {
     if (!_.isEmpty(window.clients)){
       point = new Date() * 1;
-
       time = tickTime - ((new Date() * 1) - point);
       if (time < 0){
         time = 0;
